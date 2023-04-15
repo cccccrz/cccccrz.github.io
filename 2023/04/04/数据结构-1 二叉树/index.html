@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>数据结构-1 二叉树 - ONE PIECE</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="ONE PIECE"><meta name="msapplication-TileImage" content="/img/T_emp.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ONE PIECE"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="学习日志"><meta property="og:type" content="article"><meta property="og:title" content="数据结构-1 二叉树"><meta property="og:url" content="https://cccccrz.github.io/2023/04/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1%20%E4%BA%8C%E5%8F%89%E6%A0%91/"><meta property="og:site_name" content="ONE PIECE"><meta property="og:description" content="学习日志"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b3ed9b71~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b414c3d7~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b4b21c1f~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b4d0259c~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b57cfecc~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b5d419dd~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://juejin.cn/equation?tex=%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%AC%ACi%E5%B1%82%E4%B8%8A%E6%9C%80%E5%A4%9A%E6%9C%89%7B2%5E%7Bi-1%7D%7D%E4%B8%AA%E8%8A%82%E7%82%B9%20%E3%80%82%EF%BC%88i%3E=1%EF%BC%89"><meta property="og:image" content="https://juejin.cn/equation?tex=%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%A6%82%E6%9E%9C%E6%B7%B1%E5%BA%A6%E4%B8%BAk,%E9%82%A3%E4%B9%88%E6%9C%80%E5%A4%9A%E6%9C%89%7B2%5E%7Bk-1%7D%7D%E4%B8%AA%E8%8A%82%E7%82%B9%E3%80%82(k%3E=1%EF%BC%89"><meta property="og:image" content="https://juejin.cn/equation?tex=n_0=n_2+1%20%20,n_0%E8%A1%A8%E7%A4%BA%E5%BA%A6%E6%95%B0%E4%B8%BA0%E7%9A%84%E8%8A%82%E7%82%B9%E6%95%B0%EF%BC%8Cn_2%E8%A1%A8%E7%A4%BA%E5%BA%A6%E6%95%B0%E4%B8%BA2%E7%9A%84%E8%8A%82%E7%82%B9%E6%95%B0%E3%80%82"><meta property="og:image" content="https://juejin.cn/equation?tex=%E5%9C%A8%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%EF%BC%8C%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6%E4%B8%BA%5Blog_2%7B%5En%7D%5D+1%EF%BC%8C%E5%85%B6%E4%B8%AD%5Blog_2%7B%5En%7D%5D%E6%98%AF%E5%90%91%E4%B8%8B%E5%8F%96%E6%95%B4%E3%80%82"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616d2bc0647~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616d9ddb2ce~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616dd76dd99~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616de76df2a~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616e9c21fa5~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><meta property="article:published_time" content="2023-04-04T08:09:34.000Z"><meta property="article:modified_time" content="2023-04-15T07:50:47.288Z"><meta property="article:author" content="tty"><meta property="article:tag" content="数据结构"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b3ed9b71~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cccccrz.github.io/2023/04/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1%20%E4%BA%8C%E5%8F%89%E6%A0%91/"},"headline":"ONE PIECE","image":[],"datePublished":"2023-04-04T08:09:34.000Z","dateModified":"2023-04-15T07:50:47.288Z","author":{"@type":"Person","name":"tty"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject"}},"description":"学习日志"}</script><link rel="canonical" href="https://cccccrz.github.io/2023/04/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1%20%E4%BA%8C%E5%8F%89%E6%A0%91/"><link rel="icon" href="/img/T_emp.png"><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">ONE PIECE</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">文章归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">个人简介</a><a class="navbar-item" href="/message">留言</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2023-04-04  <span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">数据结构-1 二叉树</h1><div class="content"><p>学习日志</p>
+<span id="more"></span>
+
+<h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p><strong>树（Tree）</strong> 是<code>n(n&gt;=0)</code>个结点的有限集。<code>n=0</code>时称为空树。在任意一颗非空树中：</p>
+<ol>
+<li>有且仅有一个特定的称为根（Root）的结点；</li>
+<li>当n&gt;1时，其余结点可分为<code>m(m&gt;0)</code>个互不相交的有限集T1、T2、……、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。</li>
+</ol>
+<p>此外，树的定义还需要强调以下两点：</p>
+<ol>
+<li><code>n&gt;0</code>时根结点是唯一的，不可能存在多个根结点，数据结构中的树只能有一个根结点。</li>
+<li><code>m&gt;0</code>时，子树的个数没有限制，但它们一定是互不相交的。</li>
+</ol>
+<h4 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h4><p><strong>结点</strong>是数据结构中的基础，是构成复杂数据结构的基本组成单位。 <img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b3ed9b71~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h4 id="结点的度"><a href="#结点的度" class="headerlink" title="结点的度"></a>结点的度</h4><p>结点拥有的子树数目称为结点的<strong>度</strong>。 <img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b414c3d7~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h4 id="结点关系"><a href="#结点关系" class="headerlink" title="结点关系"></a>结点关系</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b4b21c1f~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<p>结点子树的根结点为该结点的<strong>孩子结点</strong>。相应该结点称为孩子结点的<strong>双亲结点</strong>。 同一个双亲结点的孩子结点之间互称<strong>兄弟结点</strong>。</p>
+<ul>
+<li>如图：A为B的双亲结点，B为A的孩子结点。</li>
+<li>结点B与结点C互为兄弟结点。</li>
+</ul>
+<h4 id="结点层次"><a href="#结点层次" class="headerlink" title="结点层次"></a>结点层次</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b4d0259c~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<p>从根开始定义起，根为第一层，根的孩子为第二层，以此类推。</p>
+<h4 id="树的深度"><a href="#树的深度" class="headerlink" title="树的深度"></a>树的深度</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b57cfecc~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"> 树中结点的最大层次数称为树的深度或高度。 如图树的深度为4。</p>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p><strong>二叉树</strong>是<code>n(n&gt;=0)</code>个结点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根结点和两棵互不相交的、分别称为根结点的左子树和右子树组成。</p>
+<h4 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616b5d419dd~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h4 id="二叉树特点"><a href="#二叉树特点" class="headerlink" title="二叉树特点"></a>二叉树特点</h4><p>由二叉树定义以及图示分析得出二叉树有以下特点：</p>
+<ol>
+<li>每个结点最多有两颗子树，所以二叉树中不存在度大于2的结点。</li>
+<li>左子树和右子树是有顺序的，次序不能任意颠倒。</li>
+<li>即使树中某结点只有一棵子树，也要区分它是左子树还是右子树。</li>
+</ol>
+<h4 id="二叉树性质"><a href="#二叉树性质" class="headerlink" title="二叉树性质"></a>二叉树性质</h4><p>由二叉树定义以及图示分析得出二叉树有以下性质：</p>
+<ol>
+<li><img src="https://juejin.cn/equation?tex=%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%AC%ACi%E5%B1%82%E4%B8%8A%E6%9C%80%E5%A4%9A%E6%9C%89%7B2%5E%7Bi-1%7D%7D%E4%B8%AA%E8%8A%82%E7%82%B9%20%E3%80%82%EF%BC%88i%3E=1%EF%BC%89" alt="img"></li>
+<li><img src="https://juejin.cn/equation?tex=%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%A6%82%E6%9E%9C%E6%B7%B1%E5%BA%A6%E4%B8%BAk,%E9%82%A3%E4%B9%88%E6%9C%80%E5%A4%9A%E6%9C%89%7B2%5E%7Bk-1%7D%7D%E4%B8%AA%E8%8A%82%E7%82%B9%E3%80%82(k%3E=1%EF%BC%89" alt="img"></li>
+<li><img src="https://juejin.cn/equation?tex=n_0=n_2+1%20%20,n_0%E8%A1%A8%E7%A4%BA%E5%BA%A6%E6%95%B0%E4%B8%BA0%E7%9A%84%E8%8A%82%E7%82%B9%E6%95%B0%EF%BC%8Cn_2%E8%A1%A8%E7%A4%BA%E5%BA%A6%E6%95%B0%E4%B8%BA2%E7%9A%84%E8%8A%82%E7%82%B9%E6%95%B0%E3%80%82" alt="img"></li>
+<li><img src="https://juejin.cn/equation?tex=%E5%9C%A8%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%EF%BC%8C%E5%85%B7%E6%9C%89n%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6%E4%B8%BA%5Blog_2%7B%5En%7D%5D+1%EF%BC%8C%E5%85%B6%E4%B8%AD%5Blog_2%7B%5En%7D%5D%E6%98%AF%E5%90%91%E4%B8%8B%E5%8F%96%E6%95%B4%E3%80%82" alt="img"></li>
+<li>若对含 n 个结点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的结点有如下特性：</li>
+</ol>
+<blockquote>
+<ul>
+<li>若 i&#x3D;1，则该结点是二叉树的根，无双亲, 否则，编号为 [i&#x2F;2] 的结点为其双亲结点;</li>
+<li>若 2i&gt;n，则该结点无左孩子， 否则，编号为 2i 的结点为其左孩子结点；</li>
+<li>若 2i+1&gt;n，则该结点无右孩子结点， 否则，编号为2i+1 的结点为其右孩子结点。</li>
+</ul>
+</blockquote>
+<h3 id="斜树"><a href="#斜树" class="headerlink" title="斜树"></a>斜树</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p><strong>斜树</strong>：所有的结点都只有左子树的二叉树叫左斜树。所有结点都是只有右子树的二叉树叫右斜树。这两者统称为斜树。</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616d2bc0647~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h3 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h3><h4 id="图解-1"><a href="#图解-1" class="headerlink" title="图解"></a>图解</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616d9ddb2ce~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><p><strong>满二叉树</strong>：在一棵二叉树中。如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。</p>
+<h4 id="满二叉树的特点"><a href="#满二叉树的特点" class="headerlink" title="满二叉树的特点"></a>满二叉树的特点</h4><p>满二叉树的特点有：</p>
+<ol>
+<li>叶子只能出现在最下一层。出现在其它层就不可能达成平衡。</li>
+<li>非叶子结点的度一定是2。</li>
+<li>在同样深度的二叉树中，满二叉树的结点个数最多，叶子数最多。</li>
+</ol>
+<h3 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><h4 id="图解-2"><a href="#图解-2" class="headerlink" title="图解"></a>图解</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616dd76dd99~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><p><strong>完全二叉树</strong>：对一颗具有n个结点的二叉树按层编号，如果编号为i(1&lt;&#x3D;i&lt;&#x3D;n)的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，则这棵二叉树称为完全二叉树。</p>
+<h4 id="完全二叉树特点"><a href="#完全二叉树特点" class="headerlink" title="完全二叉树特点"></a>完全二叉树特点</h4><p><strong>特点</strong>：</p>
+<ol>
+<li>叶子结点只能出现在最下层和次下层。</li>
+<li>最下层的叶子结点集中在树的左部。</li>
+<li>倒数第二层若存在叶子结点，一定在右部连续位置。</li>
+<li>如果结点度为1，则该结点只有左孩子，即没有右子树。</li>
+<li>同样结点数目的二叉树，完全二叉树深度最小。</li>
+<li><strong>注</strong>：满二叉树一定是完全二叉树，但反过来不一定成立。</li>
+</ol>
+<h3 id="二叉树的存储结构"><a href="#二叉树的存储结构" class="headerlink" title="二叉树的存储结构"></a>二叉树的存储结构</h3><h4 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h4><p>二叉树的顺序存储结构就是使用一维数组存储二叉树中的结点，并且结点的存储位置，就是数组的下标索引。</p>
+<h4 id="图解-3"><a href="#图解-3" class="headerlink" title="图解"></a>图解</h4><p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616de76df2a~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<p>如图一棵完全二叉树按照顺序存储： <img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/29/1739a616e9c21fa5~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="img"></p>
+<h3 id="二叉树遍历"><a href="#二叉树遍历" class="headerlink" title="二叉树遍历"></a>二叉树遍历</h3><h4 id="定义-6"><a href="#定义-6" class="headerlink" title="定义"></a>定义</h4><p><strong>二叉树的遍历</strong>是指从二叉树的根结点出发，按照某种次序依次访问二叉树中的所有结点，使得每个结点被访问一次，且仅被访问一次。</p>
+<h4 id="访问次序"><a href="#访问次序" class="headerlink" title="访问次序"></a>访问次序</h4><p>二叉树的访问次序可以分为四种：</p>
+<ol>
+<li>前序遍历 根结点 &gt; 左子树 &gt; 右子树</li>
+<li>中序遍历 左子树&gt; 根结点 &gt; 右子树</li>
+<li>后序遍历 左子树 &gt; 右子树 &gt; 根结点</li>
+<li>层序遍历 仅仅需按层次遍历就可以</li>
+</ol>
+<p>参考文章:<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6855129007147941902">二叉树！！！数据结构与算法，大学期间没学会，现在终于搞明白了 - 掘金 (juejin.cn)</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>数据结构-1 二叉树</p><p><a href="https://cccccrz.github.io/2023/04/04/数据结构-1 二叉树/">https://cccccrz.github.io/2023/04/04/数据结构-1 二叉树/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><a href="https://cccccrz.github.io"><p>tty</p></a></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-04-04</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-15</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="recommend-area"><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 相关文章</span><br><span>  1.<a class="is-size-6" href="/2023/04/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-2-%E5%A0%86/" target="_blank" rel="noreferrer">数据结构-2 堆</a><br></span></div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 推荐文章</span><br><span>  1.<a class="is-size-6" href="/2023/04/05/Github%E5%BC%80%E6%BA%90%E5%BA%93-%E5%B7%A5%E5%85%B7/" target="_blank" rel="noreferrer">Github开源库&amp;工具</a><br></span><span>  2.<a class="is-size-6" href="/2023/04/13/QList%E5%8E%BB%E9%87%8D/" target="_blank" rel="noreferrer">QList去重</a><br></span><span>  3.<a class="is-size-6" href="/2023/04/13/QThread%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" target="_blank" rel="noreferrer">QThread使用方法</a><br></span><span>  4.<a class="is-size-6" href="/2023/04/13/Qt-MVC%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noreferrer">Qt MVC模型</a><br></span><span>  5.<a class="is-size-6" href="/2023/04/13/qt%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" target="_blank" rel="noreferrer">qt增加右键菜单</a><br></span><span>  6.<a class="is-size-6" href="/2023/04/13/qt%E5%89%AA%E8%B4%B4%E6%9D%BF/" target="_blank" rel="noreferrer">qt剪贴板</a><br></span></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/04/05/Github%E5%BC%80%E6%BA%90%E5%BA%93-%E5%B7%A5%E5%85%B7/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Github开源库&amp;工具</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/04/04/Cpp-%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA-1/"><span class="level-item">C++查漏补缺(1)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex is-mobile" href="#树"><span>树</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#定义"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#节点"><span>节点</span></a></li><li><a class="is-flex is-mobile" href="#结点的度"><span>结点的度</span></a></li><li><a class="is-flex is-mobile" href="#结点关系"><span>结点关系</span></a></li><li><a class="is-flex is-mobile" href="#结点层次"><span>结点层次</span></a></li><li><a class="is-flex is-mobile" href="#树的深度"><span>树的深度</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#二叉树"><span>二叉树</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#定义-1"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#图解"><span>图解</span></a></li><li><a class="is-flex is-mobile" href="#二叉树特点"><span>二叉树特点</span></a></li><li><a class="is-flex is-mobile" href="#二叉树性质"><span>二叉树性质</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#斜树"><span>斜树</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#定义-2"><span>定义</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#满二叉树"><span>满二叉树</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#图解-1"><span>图解</span></a></li><li><a class="is-flex is-mobile" href="#定义-3"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#满二叉树的特点"><span>满二叉树的特点</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#完全二叉树"><span>完全二叉树</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#图解-2"><span>图解</span></a></li><li><a class="is-flex is-mobile" href="#定义-4"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#完全二叉树特点"><span>完全二叉树特点</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#二叉树的存储结构"><span>二叉树的存储结构</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#定义-5"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#图解-3"><span>图解</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#二叉树遍历"><span>二叉树遍历</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#定义-6"><span>定义</span></a></li><li><a class="is-flex is-mobile" href="#访问次序"><span>访问次序</span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="column-right-shadow is-hidden-widescreen"></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">ONE PIECE</a><p class="size-small"><span>&copy; 2023 tty</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noreferrer">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noreferrer">Icarus</a> &amp; <a href="https://github.com/LittleYe233/hexo-theme-amazingremake" target="_blank" rel="noreferrer">Amazing-Remake</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><div class="size-small"><span>❤️感谢 <strong><span id="busuanzi_value_site_uv">99+</span></strong> 小伙伴的 <strong><span id="busuanzi_value_site_pv">99+</span></strong> 次光临！❤️</span></div></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    enabled: true,
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script><script type="text/javascript">var pjax = new Pjax({
+            elements: "a",//代表点击链接就更新
+            selectors: [  //代表要更新的节点
+                ".section",
+                "title"
+            ],
+            cache: true,
+            cacheBust:false
+        })
+
+        function loadBusuanzi(){
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", function () {});
+        }
+
+        function loadMathJax() { // 加载mathjax
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$']],
+                    autoload: {
+                        color: [],
+                        colorv2: ['color']
+                    },
+                    packages: {'[+]': ['noerrors']}
+                },
+                options: {
+                    ignoreHtmlClass: 'tex2jax_ignore',
+                    processHtmlClass: 'tex2jax_process'
+                },
+                loader: {
+                    load: ['input/asciimath', '[tex]/noerrors']
+                }
+            };
+            $.getScript('//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js');
+        };
+
+        // 开始 PJAX 执行的函数
+        document.addEventListener('pjax:send', function () {
+        });
+        
+        // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+        document.addEventListener('pjax:complete', function () {
+            $(".section").css({opacity:1});
+            if(false){
+                $.getScript('/js/comment-issue-data.js',function(){loadIssueData('','','','',false);});
+            }
+            if('undefined' === 'mathjax'){
+                loadMathJax();
+            }
+            loadMainJs(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings);
+            loadBackTop();
+            loadBusuanzi();
+            if(typeof loadBanner == 'function'){
+                loadBanner();
+            }
+        });</script></body></html>

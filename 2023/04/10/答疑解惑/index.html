@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>答疑解惑 - ONE PIECE</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="ONE PIECE"><meta name="msapplication-TileImage" content="/img/T_emp.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ONE PIECE"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="记录一些问题的解决方案，常用知识点，以及资源"><meta property="og:type" content="article"><meta property="og:title" content="答疑解惑"><meta property="og:url" content="https://cccccrz.github.io/2023/04/10/%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"><meta property="og:site_name" content="ONE PIECE"><meta property="og:description" content="记录一些问题的解决方案，常用知识点，以及资源"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cccccrz.github.io/img/og_image.png"><meta property="article:published_time" content="2023-04-10T02:52:59.000Z"><meta property="article:modified_time" content="2023-04-14T13:56:08.944Z"><meta property="article:author" content="tty"><meta property="article:tag" content="c++"><meta property="article:tag" content="qt"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cccccrz.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cccccrz.github.io/2023/04/10/%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"},"headline":"ONE PIECE","image":["https://cccccrz.github.io/img/og_image.png"],"datePublished":"2023-04-10T02:52:59.000Z","dateModified":"2023-04-14T13:56:08.944Z","author":{"@type":"Person","name":"tty"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject"}},"description":"记录一些问题的解决方案，常用知识点，以及资源"}</script><link rel="canonical" href="https://cccccrz.github.io/2023/04/10/%E7%AD%94%E7%96%91%E8%A7%A3%E6%83%91/"><link rel="icon" href="/img/T_emp.png"><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">ONE PIECE</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">文章归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">个人简介</a><a class="navbar-item" href="/message">留言</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2023-04-10  <span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">答疑解惑</h1><div class="content"><p>记录一些问题的解决方案，常用知识点，以及资源</p>
+<span id="more"></span>
+
+<h3 id="QT"><a href="#QT" class="headerlink" title="QT"></a>QT</h3><h5 id="样式表"><a href="#样式表" class="headerlink" title="样式表"></a>样式表</h5><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012803067/article/details/70853425">qt中css的属性</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nanqiang/p/10026678.html">qt样式表</a></p>
+<br>
+
+<h3 id="MQTT"><a href="#MQTT" class="headerlink" title="MQTT"></a>MQTT</h3><p>官方手册</p>
+<p><a target="_blank" rel="noopener" href="https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/index.html">https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.eclipse.org/paho/files/mqttdoc/MQTTAsync/html/index.html">https://www.eclipse.org/paho/files/mqttdoc/MQTTAsync/html/index.html</a></p>
+<br>
+
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><h5 id="资源包搜索"><a href="#资源包搜索" class="headerlink" title="资源包搜索"></a>资源包搜索</h5><p><a target="_blank" rel="noopener" href="https://pkgs.org/">Packages for Linux and Unix</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.debian.org/distrib/packages">debian软件包</a></p>
+<h5 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h5><p><a target="_blank" rel="noopener" href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/about/">源码</a></p>
+<br>
+
+<h3 id="Libevent"><a href="#Libevent" class="headerlink" title="Libevent"></a>Libevent</h3><p><a target="_blank" rel="noopener" href="https://aceld.gitbooks.io/libevent/content/">libevent 深入浅出</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/diegodu/p/4766620.html">libevent编程疑难解答 </a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhiiyang3344/article/details/48374121">libevnet学习笔记，异步非阻塞SOCKET,从初等到高等代码</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xufeng0991/article/details/44134005">libevent在windows下使用步骤详解</a></p>
+<br>
+
+<h3 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h3><p><a target="_blank" rel="noopener" href="https://www.coderutil.com/">程序员盒子</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>答疑解惑</p><p><a href="https://cccccrz.github.io/2023/04/10/答疑解惑/">https://cccccrz.github.io/2023/04/10/答疑解惑/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><a href="https://cccccrz.github.io"><p>tty</p></a></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-04-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-14</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="recommend-area"><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 推荐文章</span><br><span>  1.<a class="is-size-6" href="/2023/04/05/Github%E5%BC%80%E6%BA%90%E5%BA%93-%E5%B7%A5%E5%85%B7/" target="_blank" rel="noreferrer">Github开源库&amp;工具</a><br></span><span>  2.<a class="is-size-6" href="/2023/04/13/QList%E5%8E%BB%E9%87%8D/" target="_blank" rel="noreferrer">QList去重</a><br></span><span>  3.<a class="is-size-6" href="/2023/04/13/QThread%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" target="_blank" rel="noreferrer">QThread使用方法</a><br></span><span>  4.<a class="is-size-6" href="/2023/04/13/Qt-MVC%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noreferrer">Qt MVC模型</a><br></span><span>  5.<a class="is-size-6" href="/2023/04/13/qt%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" target="_blank" rel="noreferrer">qt增加右键菜单</a><br></span><span>  6.<a class="is-size-6" href="/2023/04/13/qt%E5%89%AA%E8%B4%B4%E6%9D%BF/" target="_blank" rel="noreferrer">qt剪贴板</a><br></span></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/04/13/qt%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Qt工程文件</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/04/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-2-%E5%A0%86/"><span class="level-item">数据结构-2 堆</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex is-mobile" href="#QT"><span>QT</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex is-mobile" href="#样式表"><span>样式表</span></a></li></ul></ul></li><li><a class="is-flex is-mobile" href="#MQTT"><span>MQTT</span></a></li><li><a class="is-flex is-mobile" href="#Linux"><span>Linux</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex is-mobile" href="#资源包搜索"><span>资源包搜索</span></a></li><li><a class="is-flex is-mobile" href="#内核"><span>内核</span></a></li></ul></ul></li><li><a class="is-flex is-mobile" href="#Libevent"><span>Libevent</span></a></li><li><a class="is-flex is-mobile" href="#搜索引擎"><span>搜索引擎</span></a></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="column-right-shadow is-hidden-widescreen"></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">ONE PIECE</a><p class="size-small"><span>&copy; 2023 tty</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noreferrer">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noreferrer">Icarus</a> &amp; <a href="https://github.com/LittleYe233/hexo-theme-amazingremake" target="_blank" rel="noreferrer">Amazing-Remake</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><div class="size-small"><span>❤️感谢 <strong><span id="busuanzi_value_site_uv">99+</span></strong> 小伙伴的 <strong><span id="busuanzi_value_site_pv">99+</span></strong> 次光临！❤️</span></div></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    enabled: true,
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script><script type="text/javascript">var pjax = new Pjax({
+            elements: "a",//代表点击链接就更新
+            selectors: [  //代表要更新的节点
+                ".section",
+                "title"
+            ],
+            cache: true,
+            cacheBust:false
+        })
+
+        function loadBusuanzi(){
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", function () {});
+        }
+
+        function loadMathJax() { // 加载mathjax
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$']],
+                    autoload: {
+                        color: [],
+                        colorv2: ['color']
+                    },
+                    packages: {'[+]': ['noerrors']}
+                },
+                options: {
+                    ignoreHtmlClass: 'tex2jax_ignore',
+                    processHtmlClass: 'tex2jax_process'
+                },
+                loader: {
+                    load: ['input/asciimath', '[tex]/noerrors']
+                }
+            };
+            $.getScript('//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js');
+        };
+
+        // 开始 PJAX 执行的函数
+        document.addEventListener('pjax:send', function () {
+        });
+        
+        // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+        document.addEventListener('pjax:complete', function () {
+            $(".section").css({opacity:1});
+            if(false){
+                $.getScript('/js/comment-issue-data.js',function(){loadIssueData('','','','',false);});
+            }
+            if('undefined' === 'mathjax'){
+                loadMathJax();
+            }
+            loadMainJs(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings);
+            loadBackTop();
+            loadBusuanzi();
+            if(typeof loadBanner == 'function'){
+                loadBanner();
+            }
+        });</script></body></html>
