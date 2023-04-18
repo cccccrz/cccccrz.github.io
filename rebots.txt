@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /wp-*
+Disallow: /*&*
+Disallow: /*%*
+Disallow: /tag=*
+Disallow: /tags/*
+Disallow: /message/*
+Disallow: /about/*
+Disallow: /categories/*
+Disallow: /archives/*
+Disallow: /?feed
+Disallow: /?=*
+Sitemap: https://cccccrz.github.io/sitemap.xml
