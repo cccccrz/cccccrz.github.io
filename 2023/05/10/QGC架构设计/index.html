@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>QGC架构设计 - ONE PIECE</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="ONE PIECE"><meta name="msapplication-TileImage" content="/img/T_emp.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ONE PIECE"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="[TOC]"><meta property="og:type" content="article"><meta property="og:title" content="QGC架构设计"><meta property="og:url" content="https://cccccrz.github.io/2023/05/10/QGC%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"><meta property="og:site_name" content="ONE PIECE"><meta property="og:description" content="[TOC]"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://dev.qgroundcontrol.com/master/assets/tools/mocklink_waiting_for_connection.jpg"><meta property="og:image" content="https://dev.qgroundcontrol.com/master/assets/tools/mocklink_connected.jpg"><meta property="article:published_time" content="2023-05-10T10:56:24.000Z"><meta property="article:modified_time" content="2023-05-10T11:20:41.390Z"><meta property="article:author" content="tty"><meta property="article:tag" content="qt"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://dev.qgroundcontrol.com/master/assets/tools/mocklink_waiting_for_connection.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://cccccrz.github.io/2023/05/10/QGC%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"},"headline":"ONE PIECE","image":["https://dev.qgroundcontrol.com/master/assets/tools/mocklink_waiting_for_connection.jpg","https://dev.qgroundcontrol.com/master/assets/tools/mocklink_connected.jpg"],"datePublished":"2023-05-10T10:56:24.000Z","dateModified":"2023-05-10T11:20:41.390Z","author":{"@type":"Person","name":"tty"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject"}},"description":"[TOC]"}</script><link rel="canonical" href="https://cccccrz.github.io/2023/05/10/QGC%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"><link rel="icon" href="/img/T_emp.png"><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">ONE PIECE</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">文章归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">个人简介</a><a class="navbar-item" href="/message">留言</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2023-05-10  <span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">QGC架构设计</h1><div class="content"><p>[TOC]</p>
+<span id="more"></span>
+
+<h1 id="用户界面设计"><a href="#用户界面设计" class="headerlink" title="用户界面设计"></a>用户界面设计</h1><p>QGC中UI设计的主要模式是用QML编写的UI页面，多次与用C ++编写的自定义“Controller”进行通信。 这种设计模式有点沿用MVC设计模式，但也有显著不同之处。</p>
+<p>QML代码通过以下机制绑定到与系统关联的信息：</p>
+<ul>
+<li>自定义控制器</li>
+<li>全局QGroundControl对象，提供对活动Vehicle等内容的访问</li>
+<li>FactSystem提供对参数的访问，在某些情况下提供自定义事实。</li>
+</ul>
+<p>注意：由于QGC中使用的QML的复杂性以及它依赖于与C ++对象的通信来驱动ui，因此无法使用Qt提供的QML Designer来编辑QML。</p>
+<h2 id="多设备设计模式"><a href="#多设备设计模式" class="headerlink" title="多设备设计模式"></a>多设备设计模式</h2><p>QGroundControl设计用于从桌面到笔记本电脑，平板电脑和使用鼠标和触摸的小型手机屏幕等多种设备类型。 以下是QGC如何做到以及背后原理的描述。</p>
+<h3 id="目标设备"><a href="#目标设备" class="headerlink" title="目标设备"></a>目标设备</h3><p>从触摸的角度和屏幕尺寸的角度来看，QGC UI设计的优先目标是平板电脑（比如三星Galaxy）。 由于此决定，其他设备类型和大小可能会看到一些视觉和&#x2F;或可用性的错误。 基于优先级的决策时的当前顺序是平板电脑，笔记本电脑，台式机，电话（任何小屏幕）。</p>
+<h3 id="使用的开发工具"><a href="#使用的开发工具" class="headerlink" title="使用的开发工具"></a>使用的开发工具</h3><h4 id="Qt布局控件"><a href="#Qt布局控件" class="headerlink" title="Qt布局控件"></a>Qt布局控件</h4><p>QGC没有针对不同屏幕尺寸和&#x2F;或形状因子的不同编码的UI。 通常，它使用QML Layout功能来重排一组QML UI代码以适应不同的外形。 在某些情况下，它提供了较小的屏幕尺寸细节，使事情适合。 但这是一个简单的可见性模式。</p>
+<h4 id="FactSystem（事实系统）"><a href="#FactSystem（事实系统）" class="headerlink" title="FactSystem（事实系统）"></a>FactSystem（事实系统）</h4><p>QGC内部是一个系统，用于管理系统中的所有单个数据。 这个数据模型是连接到控件的。</p>
+<h4 id="严重依赖可重用控件"><a href="#严重依赖可重用控件" class="headerlink" title="严重依赖可重用控件"></a>严重依赖可重用控件</h4><p>QGC UI是从一组可重用的控件和UI元素开发而来的。 这样，现在可以在整个UI中使用添加到可重用控件的任何新功能。 这些可重用的控件还连接到FactSystem Facts，然后FactSystem Facts自动提供适当的UI。</p>
+<h2 id="字体和调色板"><a href="#字体和调色板" class="headerlink" title="字体和调色板"></a>字体和调色板</h2><p>QGC有一套标准的字体和调色板，应该由所有用户界面使用。</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> QGroundControl.Palette       <span class="number">1.0</span></span><br><span class="line"><span class="keyword">import</span> QGroundControl.ScreenTools   <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="QGCPalette-QGC调色板"><a href="#QGCPalette-QGC调色板" class="headerlink" title="QGCPalette(QGC调色板)"></a>QGCPalette(QGC调色板)</h3><p>此项目显示QGC调色板。 这个调色板有两种变体：浅色和深色。 较浅的调色板适合户外使用，黑色调色板适用于室内。 通常，您不应该直接为UI指定颜色，您应该使用调色板中的颜色。 如果不遵循此规则，则您创建的用户界面将无法通过浅色&#x2F;深色样式更改。</p>
+<h3 id="QGCMapPalette-QGC地图调色板"><a href="#QGCMapPalette-QGC地图调色板" class="headerlink" title="QGCMapPalette(QGC地图调色板)"></a>QGCMapPalette(QGC地图调色板)</h3><p>地图调色板用于绘制地图的颜色。 由于不同的地图样式，特别是卫星和街道，您需要有不同的颜色来清晰地绘制它们。 卫星地图需要更浅的颜色，而街道地图需要更深的颜色。 QGCMapPalette项目为此提供了一组颜色，以及在地图上切换浅色和深色的功能。</p>
+<h3 id="ScreenTools-屏幕工具"><a href="#ScreenTools-屏幕工具" class="headerlink" title="ScreenTools (屏幕工具)"></a>ScreenTools (屏幕工具)</h3><p>ScreenTools项提供可用于指定字体大小的值。 它还提供有关屏幕大小以及QGC是否在移动设备上运行的信息。</p>
+<h2 id="用户界面控件"><a href="#用户界面控件" class="headerlink" title="用户界面控件"></a>用户界面控件</h2><p>QGC提供了一组用于构建用户界面的基本控件。 一般来说，它们往往是Qt支持的基本QML控件上方的薄层，Qt控件支持QGC调色板。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import QGroundControl.Controls 1.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Qt控件"><a href="#Qt控件" class="headerlink" title="Qt控件"></a>Qt控件</h3><p>以下控件是标准Qt QML控件的QGC变体。 除了使用QGC调色板绘制。 它还们提供与相应Qt控件相同的功能，</p>
+<ul>
+<li>QGCButton</li>
+<li>QGCCheckBox</li>
+<li>QGColoredImage</li>
+<li>QGCComboBox</li>
+<li>QGC可轻弹</li>
+<li>QGCLabel</li>
+<li>QGCM可操作项</li>
+<li>QGCRadioButton</li>
+<li>QGCSlider</li>
+<li>QGCTextField</li>
+</ul>
+<h3 id="QGC-控件"><a href="#QGC-控件" class="headerlink" title="QGC 控件"></a>QGC 控件</h3><p>这些自定义控件是QGC独有的，用于创建标准UI元素。</p>
+<ul>
+<li>DropButton - RoundButton，单击时会删除一组选项。 示例是平面视图中的同步按钮。</li>
+<li>ExclusiveGroupItem - 用于支持QML ExclusiveGroup 概念的自定义控制的基础项目。</li>
+<li>QGCView - 系统中所有顶级视图的基本控件。 提供对FactPanels的支持并显示QGCViewDialogs和QGCViewMessages。</li>
+<li>QGC View对话框 - 从QGC视图右侧弹出的对话框。 您可以指定对话框的接受&#x2F;拒绝按钮以及对话框内容。 使用示例是当您单击某个参数并显示值编辑器对话框时。</li>
+<li>QGCViewMessage - QGCViewDialog的简化版本，允许您指定按钮和简单的文本消息。</li>
+<li>QGCViewPanel - QGCView内部的主要视图内容。</li>
+<li>RoundButton - 一个圆形按钮控件，它使用图像作为其内部内容。</li>
+<li>SetupPage - 所有安装载具组件页面的基本控件。 提供标题，说明和组件页面内容区域。</li>
+</ul>
+<h1 id="Fact-System-事实系统"><a href="#Fact-System-事实系统" class="headerlink" title="Fact System(事实系统)"></a>Fact System(事实系统)</h1><p>Fact System(事实系统)提供一组标准化和简化QGC用户界面创建的功能。</p>
+<h2 id="Fact"><a href="#Fact" class="headerlink" title="Fact"></a>Fact</h2><p>事实代表系统中的单个值。</p>
+<h2 id="FactMetaData"><a href="#FactMetaData" class="headerlink" title="FactMetaData"></a>FactMetaData</h2><p>与每个事实有FactMetaData相关联 它提供有关事实的详细信息，以便驱动自动用户界面生成和验证。</p>
+<h2 id="事实控制"><a href="#事实控制" class="headerlink" title="事实控制"></a>事实控制</h2><p>事实控件是一个QML用户界面控件，它连接到Fact和它的FactMetaData，为用户提供控件以修改&#x2F;显示与Fact相关的值。</p>
+<h2 id="FactGroup（事实小组）"><a href="#FactGroup（事实小组）" class="headerlink" title="FactGroup（事实小组）"></a>FactGroup（事实小组）</h2><p>事实<em>组</em>是一组<a target="_blank" rel="noopener" href="https://dev.qgroundcontrol.com/master/zh/fact_system.html#fact">事实</a>。它用于组织事实和管理用户定义的事实。</p>
+<h2 id="自定义构建支持"><a href="#自定义构建支持" class="headerlink" title="自定义构建支持"></a>自定义构建支持</h2><p>用户定义的事实可以通过覆盖自定义固件插件类中的函数来添加。这些函数返回用于标识添加的事实组的名称到事实组映射。可以通过扩展类来添加自定义事实数据组。FactMetaDatas可以通过提供包含必要信息的json文件来使用适当的构造函数来定义。<code>factGroups``FirmwarePlugin``FactGroup``FactGroup</code></p>
+<p>也可以通过覆盖类来更改现有事实的元数据。<code>adjustMetaData``FirmwarePlugin</code></p>
+<p>可以使用或访问与车辆相关的事实（包括属于车辆固件插件返回的事实组的事实）<code>factGroups``getFact(&quot;factName&quot;)``getFact(&quot;factGroupName.factName&quot;)</code></p>
+<p>有关其他信息，请参阅<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/v4.0.8/src/FirmwarePlugin/FirmwarePlugin.h">固件插件中的</a>注释。</p>
+<h1 id="顶级视图"><a href="#顶级视图" class="headerlink" title="顶级视图"></a>顶级视图</h1><p>本节包含有关顶级视图代码的主题：设置，设置，计划和飞行。</p>
+<h2 id="Settings-View"><a href="#Settings-View" class="headerlink" title="Settings View"></a>Settings View</h2><ul>
+<li>顶级QML代码是AppSettings.qml</li>
+<li>每个按钮都会加载一个单独的QML页面</li>
+</ul>
+<h2 id="Setup-View"><a href="#Setup-View" class="headerlink" title="Setup View"></a>Setup View</h2><ul>
+<li>在SetupView.qml中实现的顶级QML代码</li>
+<li>固定的按钮&#x2F;页面集：摘要，固件</li>
+<li>按钮&#x2F;页面的剩余部分来自AutoPilot Plugin Vehicle Component列表</li>
+</ul>
+<h2 id="Plan-View"><a href="#Plan-View" class="headerlink" title="Plan View"></a>Plan View</h2><ul>
+<li>最高级别的 QML 代码是 <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/PlanView/PlanView.qml">PlanView.qml</a></li>
+<li>主视图UI是FlightMap控件</li>
+<li>QML与MissionController（C ++）通信，后者为视图提供任务项数据和方法</li>
+</ul>
+<h3 id="用于任务项目编辑的动态UI"><a href="#用于任务项目编辑的动态UI" class="headerlink" title="用于任务项目编辑的动态UI"></a>用于任务项目编辑的动态UI</h3><h4 id="任务指令树"><a href="#任务指令树" class="headerlink" title="任务指令树"></a>任务指令树</h4><p>QGC 创建用户界面，用于从 json 元数据的层次结构中动态编辑特定任务项命令。 此层次结构称为任务命令树。 这样，在添加新命令时，只能创建 json 元数据。</p>
+<h5 id="为什么是一颗树？"><a href="#为什么是一颗树？" class="headerlink" title="为什么是一颗树？"></a>为什么是一颗树？</h5><p>需要该树以不同的方式处理不同固件和／或不同的车辆类型，以支持不同的命令。 最简单的例子是 mavlink 规范可能包含了并非所有固件都支持的命令参数。 或着命令参数仅对某些车辆类型有效。 此外，在某些情况下，GCS 可能会决定将某些命令参数在视图中对最终用户进行隐藏，因为它们过于复杂或导致可用性问题。</p>
+<p>该树是MissionCommandTree类： <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MissionCommandTree.cc">MissionCommandTree.cc</a>, <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MissionCommandTree.h">MissionCommandTree.h</a></p>
+<h5 id="树根目录"><a href="#树根目录" class="headerlink" title="树根目录"></a>树根目录</h5><p>树的根目录是与 mavlink 规范完全匹配的json元数据。</p>
+<p>您可以在这里看到<code>MAV_CMD_NAV_WAYPOINT</code>根目录<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoCommon.json#L27">json</a>的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;:                   16,</span><br><span class="line">    &quot;rawName&quot;:              &quot;MAV_CMD_NAV_WAYPOINT&quot;,</span><br><span class="line">    &quot;friendlyName&quot;:         &quot;Waypoint&quot;,</span><br><span class="line">    &quot;description&quot;:          &quot;Travel to a position in 3D space.&quot;,</span><br><span class="line">    &quot;specifiesCoordinate&quot;:  true,</span><br><span class="line">    &quot;friendlyEdit&quot;:         true,</span><br><span class="line">    &quot;category&quot;:             &quot;Basic&quot;,</span><br><span class="line">    &quot;param1&quot;: &#123;</span><br><span class="line">        &quot;label&quot;:            &quot;Hold&quot;,</span><br><span class="line">        &quot;units&quot;:            &quot;secs&quot;,</span><br><span class="line">        &quot;default&quot;:          0,</span><br><span class="line">        &quot;decimalPlaces&quot;:    0</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;param2&quot;: &#123;</span><br><span class="line">        &quot;label&quot;:            &quot;Acceptance&quot;,</span><br><span class="line">        &quot;units&quot;:            &quot;m&quot;,</span><br><span class="line">        &quot;default&quot;:          3,</span><br><span class="line">        &quot;decimalPlaces&quot;:    2</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;param3&quot;: &#123;</span><br><span class="line">        &quot;label&quot;:            &quot;PassThru&quot;,</span><br><span class="line">        &quot;units&quot;:            &quot;m&quot;,</span><br><span class="line">        &quot;default&quot;:          0,</span><br><span class="line">        &quot;decimalPlaces&quot;:    2</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;param4&quot;: &#123;</span><br><span class="line">        &quot;label&quot;:            &quot;Yaw&quot;,</span><br><span class="line">        &quot;units&quot;:            &quot;deg&quot;,</span><br><span class="line">        &quot;nanUnchanged&quot;:     true,</span><br><span class="line">        &quot;default&quot;:          null,</span><br><span class="line">        &quot;decimalPlaces&quot;:    2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>注意：在现实中，基于此的信息应由 mavlink 本身提供，而不需要成为 GCS 的一部分。</p>
+<h5 id="叶节点"><a href="#叶节点" class="headerlink" title="叶节点"></a>叶节点</h5><p>然后，叶节点提供元数据，这些元数据可以覆盖命令的值和&#x2F;或从显示给用户的参数中删除参数。 完整的树层次结构是这样的：</p>
+<ul>
+<li>根－通用Mavlink<ul>
+<li>特定的车辆类型－特定于车辆的通用规范</li>
+<li>特定的硬件类型－每个固件类型有一个可选的叶节点（PX4&#x2F;ArduPilot）<ul>
+<li>特定的车辆类型－每个车辆类型有一个可选的叶节点（FW&#x2F;MR&#x2F;VTOL&#x2F;Rover&#x2F;Sub）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>注意：实际上，此替代功能应该是mavlink规格的一部分，并且应该可以从车辆中查询。</p>
+<h5 id="从完整树中构建实例树"><a href="#从完整树中构建实例树" class="headerlink" title="从完整树中构建实例树"></a>从完整树中构建实例树</h5><p>由于 json 元数据提供了所有固件／车辆类型组合的信息，因此必须根据用于创建计划的固件和车辆类型来构建要使用的实际树。 这是通过一个进程调用“collapsing”的完整树到一个固件／车辆的特定树来完成的 (<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MissionCommandTree.cc#L119">code</a>)。</p>
+<p>步骤如下：</p>
+<ul>
+<li>在实例树种添加根</li>
+<li>将特定的车辆类型重写实例树</li>
+<li>Apply the firmware type specific overrides to the instance tree</li>
+<li>将特定的硬件／车辆类型重写实例树</li>
+</ul>
+<p>然后，生成的任务命令树将为平面项目编辑器构建UI。 实际上，它不仅用于此，还有许多其他地方可以帮助您了解有关特定命令 id 的更多信息。</p>
+<h4 id="层次结构示例-MAV-CMD-NAV-WAYPOINT"><a href="#层次结构示例-MAV-CMD-NAV-WAYPOINT" class="headerlink" title="层次结构示例 MAV_CMD_NAV_WAYPOINT"></a>层次结构示例 <code>MAV_CMD_NAV_WAYPOINT</code></h4><p>让我们来看看<code>MAV_CMD_NAV_WAYPOINT</code>的示例层次结构。 根信息如上图所示。</p>
+<h5 id="根－车辆类型的特定叶节点"><a href="#根－车辆类型的特定叶节点" class="headerlink" title="根－车辆类型的特定叶节点"></a>根－车辆类型的特定叶节点</h5><p>层次结构的下一个层级是通用的 mavlink，但只针对特定的车辆。 这里的Json文件：<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoMultiRotor.json">MR</a>, <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoFixedWing.json">FW</a>, <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoRover.json">ROVER</a>, <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoSub.json">Sub</a>, <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MavCmdInfoVTOL.json">VTOL</a>。 这个是重写（固定翼）　</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;:           16,</span><br><span class="line">    &quot;comment&quot;:      &quot;MAV_CMD_NAV_WAYPOINT&quot;,</span><br><span class="line">    &quot;paramRemove&quot;:  &quot;4&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>这样做是删除参数4的编辑 UI，固定翼没有使用航向（Yaw）参数。 由于这是根的叶节点，因此无论固件类型如何，这都适用于所有固定翼车辆。</p>
+<h5 id="根－硬件类型的特定叶节点"><a href="#根－硬件类型的特定叶节点" class="headerlink" title="根－硬件类型的特定叶节点"></a>根－硬件类型的特定叶节点</h5><p>层次结构的下一层级是特定于固件类型但适用于所有车辆类型的替代。 再次让我们看看航点（Waypoint）覆盖：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/FirmwarePlugin/APM/MavCmdInfoCommon.json#L6">ArduPilot</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;:           16,</span><br><span class="line">    &quot;comment&quot;:      &quot;MAV_CMD_NAV_WAYPOINT&quot;,</span><br><span class="line">    &quot;paramRemove&quot;:  &quot;2&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/FirmwarePlugin/PX4/MavCmdInfoCommon.json#L7">PX4</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;:           16,</span><br><span class="line">    &quot;comment&quot;:      &quot;MAV_CMD_NAV_WAYPOINT&quot;,</span><br><span class="line">    &quot;paramRemove&quot;:  &quot;2,3&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>您可以看到，对于两个固件参数参数2，即接受半径，从编辑 ui 中删除。 这是QGC的特性决定。 与指定值相比，使用固件通用接受半径会更加安全和容易。 因此，我们决定对用户隐藏它。</p>
+<p>您还可以看到，对于 PX4 param3&#x2F;PassThru，由于 PX 不支持它，因此已被删除。</p>
+<h5 id="根－特定于固件的类型－特定于车辆类型的叶子节点"><a href="#根－特定于固件的类型－特定于车辆类型的叶子节点" class="headerlink" title="根－特定于固件的类型－特定于车辆类型的叶子节点"></a>根－特定于固件的类型－特定于车辆类型的叶子节点</h5><p>层次结构的最后一个级别既针对固件又针对车辆类型。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/FirmwarePlugin/APM/MavCmdInfoMultiRotor.json#L7">ArduPilot&#x2F;MR</a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;:           16,</span><br><span class="line">    &quot;comment&quot;:      &quot;MAV_CMD_NAV_WAYPOINT&quot;,</span><br><span class="line">    &quot;paramRemove&quot;:  &quot;2,3,4&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>在这里你可以看到，ArduPilot的多电机车辆参数2&#x2F;3&#x2F;4 Acceptance&#x2F;PassThru&#x2F;Yaw 已被移除。 例如，航向（Yaw）是因为不支持所以被移除。 由于此代码的工作原理的怪癖，您需要从较低级别重复重写。</p>
+<h4 id="任务命令-UI-信息"><a href="#任务命令-UI-信息" class="headerlink" title="任务命令 UI 信息"></a>任务命令 UI 信息</h4><p>两个类定义与命令相关联的元数据：</p>
+<ul>
+<li>MissionCommandUIInfo－整个命令的元数据</li>
+<li>MissionCmdParamInfo－命令中参数的元数据</li>
+</ul>
+<p>源中注释了支持 json 键的完整详细信息。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MissionCommandUIInfo.h#L82">MissionCommandUIInfo</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/// 与任务命令关联的 UI 信息 （MAV_CMD）</span><br><span class="line">///</span><br><span class="line">///MissionCommandUIInfo用于自动为MAV_CMD生成编辑ui。 此对象还支持仅具有一组命</span><br><span class="line">/// 令的部分信息的概念。 这用于创建基本命令信息的替代。 对于覆盖，只需从基本命</span><br><span class="line">/// 令 ui 信息中指定要修改的键即可。 若要重写 ui 参数信息，必须指定整个MissionParamInfo对象。</span><br><span class="line">///</span><br><span class="line">/// MissionCommandUIInfo对象的json格式为：</span><br><span class="line">///</span><br><span class="line">/// 键值                   　类型    默认值     描述</span><br><span class="line">/// id                      int     reauired    MAV_CMD id</span><br><span class="line">/// comment                 string              用于添加评论</span><br><span class="line">/// rawName                 string  required    MAV_CMD 枚举名称，仅应设置基础树信息</span><br><span class="line">/// friendlyName            string  rawName     命令的简单描述</span><br><span class="line">/// description             string              命令的详细描述</span><br><span class="line">/// specifiesCoordinate     bool    false       true: 命令指定一个纬／经／高坐标</span><br><span class="line">/// specifiesAltitudeOnly   bool    false       true: 命令仅指定高度（非坐标）</span><br><span class="line">/// standaloneCoordinate    bool    false       true: 车辆无法通过与命令关联的坐标（例如：ROI）</span><br><span class="line">/// isLandCommand           bool    false       true: 命令指定着陆指令 (LAND, VTOL_LAND, ...)</span><br><span class="line">/// friendlyEdit            bool    false       true: 命令支持友好的编辑对话框，false：Command仅支持“显示所有值”样式的编辑</span><br><span class="line">/// category                string  Advanced    该命令所属的类别</span><br><span class="line">/// paramRemove             string              由替代使用以删除参数，例如：“ 1,3”将删除替代上的参数1和3</span><br><span class="line">/// param[1-7]              object              MissionCommandParamInfo 对象</span><br><span class="line">///</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/src/MissionManager/MissionCommandUIInfo.h#L25">MissionCmdParamInfo</a>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/// 与任务命令 （MAV_CMD） 参数关联的 UI 信息</span><br><span class="line">///</span><br><span class="line">/// MissionCommandParamInfo 用于自动为与 MAV_CMD 关联的参数生成编辑ui。</span><br><span class="line">///</span><br><span class="line">/// MissionCmdParamInfo 对象的 Json 文件格式为：</span><br><span class="line">///　</span><br><span class="line">/// 键值             类型    默认值     描述</span><br><span class="line">/// label           string  required    文本字段标签</span><br><span class="line">/// units           string              值的单位，应使用 FactMetaData Units 字符串以获得自动转换</span><br><span class="line">/// default         double  0.0/NaN     默认参数值。 如果未指定默认值且 nanunchange==true，默认值为NaN。</span><br><span class="line">/// decimalPlaces   int     7           显示值得小数位数</span><br><span class="line">/// enumStrings     string              要在组合框中显示以供选择的字符串</span><br><span class="line">/// enumValues      string              与每个枚举字符串关联的值</span><br><span class="line">/// nanUnchanged    bool    false       True: 值可以设置为NaN表示信号不变</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Fly-View"><a href="#Fly-View" class="headerlink" title="Fly View"></a>Fly View</h2><ul>
+<li>顶级QML代码在FlightDisplayView.qml中</li>
+<li>QML代码与MissionController（C ++）通信以进行任务显示</li>
+<li>仪器小部件与活动的Vehicle对象通信</li>
+<li>两个主要的内部view是：<ul>
+<li><code>FlightDisplayViewMap</code></li>
+<li><code>FlightDisplayViewVideo</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="文件格式"><a href="#文件格式" class="headerlink" title="文件格式"></a>文件格式</h1><p>本节包含有关QGroundControl使用&#x2F;支持的文件格式的主题。</p>
+<h2 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h2><p>QGroundControl主要为自动驾驶开发人员提供了许多工具。 这些简化了常见的开发人员任务，包括设置模拟连接以进行测试，以及通过MAVLink访问系统Shell。</p>
+<blockquote>
+<p>注意:在调试模式下构建源以启用这些工具。</p>
+</blockquote>
+<p>工具包括：</p>
+<ul>
+<li>模拟链接（仅限每日构建） - 创建和停止多个模拟载具链接。</li>
+<li>重播飞行数据 - 重播遥测日志（用户指南）。</li>
+<li>MAVLink Inspector - 显示收到的MAVLink消息&#x2F;值。</li>
+<li>MAVLink分析器 - 绘制MAVLink消息&#x2F;值的趋势图。</li>
+<li>自定义命令小组件 - 在运行时加载自定义&#x2F;测试QML UI。</li>
+<li>板载文件 - 导航车辆文件系统和上载&#x2F;下载文件。</li>
+<li>HIL Config Widget - HIL模拟器的设置.</li>
+<li>MAVLink控制台（仅限PX4） - 连接到PX4 nsh shell并发送命令。</li>
+</ul>
+<h3 id="模拟链接"><a href="#模拟链接" class="headerlink" title="模拟链接"></a>模拟链接</h3><p>Mock Link允许您在QGroundControl调试版本中创建和停止指向多个模拟（模拟）载具的链接。</p>
+<p>模拟不支持飞行，但允许轻松测试：</p>
+<ul>
+<li>任务上传&#x2F;下载</li>
+<li>查看和更改参数</li>
+<li>测试大多数设置页面</li>
+<li>多个载具用户界面</li>
+</ul>
+<p>对于任务上载&#x2F;下载的单元测试错误情况尤其有用。</p>
+<h3 id="使用Mock-Link"><a href="#使用Mock-Link" class="headerlink" title="使用Mock Link"></a>使用Mock Link</h3><p>为了使用Mock Link：</p>
+<ol>
+<li><p>1.通过构建源来创建调试版本。</p>
+</li>
+<li><p>通过选择顶部工具栏中的“应用程序设置”图标，然后选择侧栏中的“模拟链接”来访问“模拟链接”：</p>
+<p><img src="https://dev.qgroundcontrol.com/master/assets/tools/mocklink_waiting_for_connection.jpg" alt="img"></p>
+</li>
+<li><ol>
+<li>可以单击面板中的按钮以创建相关类型的车辆链接。</li>
+</ol>
+</li>
+<li><p>每次单击按钮时，都会创建一个新连接。</p>
+</li>
+<li><p>当存在多个连接时，将显示多车辆UI。</p>
+<p><img src="https://dev.qgroundcontrol.com/master/assets/tools/mocklink_connected.jpg" alt="img"></p>
+</li>
+<li><ol>
+<li>单击停止一个模拟链接以停止当前活动的车辆。</li>
+</ol>
+</li>
+</ol>
+<p>然后使用模拟链接或多或少与使用任何其他载具相同，只是模拟不允许飞行。</p>
+<h1 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h1><p>您可以使用命令行选项启动QGroundControl。 这些用于启用日志记录，运行单元测试以及模拟不同的主机环境以进行测试。</p>
+<h2 id="使用选项启动QGroundControl"><a href="#使用选项启动QGroundControl" class="headerlink" title="使用选项启动QGroundControl"></a>使用选项启动QGroundControl</h2><p>您需要打开命令提示符或终端，将目录更改为存储qgroundcontrol.exe的位置，然后运行它。 每个平台如下所示（使用–logging：full选项）：</p>
+<p>Windows命令提示符：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;\Program Files (x86)\qgroundcontrol&quot;</span></span><br><span class="line">qgroundcontrol --logging:full</span><br></pre></td></tr></table></figure>
+
+<p>OSX终端应用程序（应用程序&#x2F;实用程序）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /Applications/qgroundcontrol.app/Contents/MacOS/</span><br><span class="line">./qgroundcontrol --logging:full</span><br></pre></td></tr></table></figure>
+
+<p>Linux终端：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./qgroundcontrol-start.sh --logging:full</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><p>选项&#x2F;命令行参数列在下表中。</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#96;</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>clear-settings<code>| 清除应用程序设置（将QGroundControl恢复为默认设置）。 | |</code>logging:full<code>| 打开完整日志记录。 请参阅控制台日志记录 | |</code>logging:full,LinkManagerVerboseLog,ParameterLoaderLog<code>| 打开完整日志记录并关闭以下列出的以逗号分隔的日志记录选项。 | |</code>–llogging:LinkManagerLog,ParameterLoaderLog<code>| 打开指定的逗号分隔日志记录选项 | |</code>–unittest:name<code>| （仅限Debug构建）运行指定单元测试。 离开：运行所有测试的名称。 | |</code>–unittest-stress:name<code>| （仅限调试版本）连续运行指定的单元测试20次。 离开：运行所有测试的名称。 | |</code>-fake-mobile<code>| 模拟在移动设备上运行。 | |</code>–test-high-dpi&#96; | 模拟在高DPI设备上运行QGroundControl。 |</p>
+<p>笔记：</p>
+<ul>
+<li>单元测试自动包含在调试版本中（作为QGroundControl的一部分）。 QGroundControl在单元测试的控制下运行（它不能正常启动）。</li>
+</ul>
+<h1 id="自定义构建"><a href="#自定义构建" class="headerlink" title="自定义构建"></a>自定义构建</h1><p>自定义构建允许第三方创建自己的QGC版本，使其能够轻松跟上常规QGC中所做的更改。QGC内置了一个架构，允许自定义构建修改并添加到常规QGC的功能集中。</p>
+<p>定制构建的一些可能性</p>
+<ul>
+<li>为您的构建打造完全品牌化</li>
+<li>定义单个外部测试版堆栈以避免携带不必要的代码</li>
+<li>实现您自己的、自动驾驶仪和固件插件覆盖</li>
+<li>实现您自己的相机管理器和插件覆盖</li>
+<li>实现您自己的QtQuick接口模块</li>
+<li>实现您自己的工具栏、工具栏指示器和 UI 导航</li>
+<li>实现您自己的飞行视图叠加层（以及如何隐藏QGC中的元素，例如飞行小部件）</li>
+<li>实现您自己的自定义QtQuick相机控制</li>
+<li>实施您自己的自定义飞行前检查清单</li>
+<li>为上述所有内容定义您自己的资源</li>
+</ul>
+<p>QGC为任何支持mavlink的车辆提供通用支持，并为PX4 Pro和ArduPilot提供固件特定支持的缺点之一是用户界面的复杂性。由于QGC事先不知道有关您的车辆的任何信息，因此需要UI位，如果您驾驶的车辆仅使用PX4 Pro固件并且是多旋翼车辆，则可能会妨碍您。如果这是已知的事情，那么可以在不同的地方简化UI。此外，QGC既针对从头开始构建自己车辆的DIY用户，也针对现成车辆的商业用户。从头开始设置 DIY 无人机需要各种功能，而这些功能对于现成车辆的用户来说是不需要的。因此，对于现成的车辆用户来说，所有 DIY 特定的东西都只是他们需要查看的额外噪音。创建自定义构建允许您为车辆指定确切的详细信息并隐藏不相关的内容，从而为您的用户创建比常规通用 QGC 更简单的用户体验。</p>
+<p>QGC 中有一个插件架构，允许这种自定义构建创建。它们可以在QGCCorePlugin.h，FirmwarePlugin.h和AutoPilotPlugin.h相关类中找到。要创建自定义构建，您需要创建标准插件的子类，覆盖适合您使用的方法集。</p>
+<p>还有一种机制允许您覆盖资源，以便您可以更改 QGC 中较小的可视元素。</p>
+<p>QGC内部还有“高级模式”的概念。而标准 QGC 构建始终在高级模式下运行。自定义构建始终以常规&#x2F;非高级模式启动。构建中有一种更简单的机制可以打开高级模式，即相当快地连续单击 5 次飞行视图按钮。如果在自定义版本中执行此操作，则会警告您进入高级模式。这里的概念是隐藏普通用户不应该在高级模式后面访问的内容。例如，商用车将不需要访问大多数面向DIY设置的设置页面。因此，自定义构建可以隐藏这一点。自定义示例代码演示如何执行此操作。</p>
+<p>如果您想了解可能性，第一步是通读那些记录可能性的文件。接下来查看 [</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">custom-example](https://github.com/mavlink/qgroundcontrol/tree/master/custom-example) source code including the </span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/custom-example/README.md">自述文件</a>。</p>
+<h2 id="自定义构建的初始存储库设置"><a href="#自定义构建的初始存储库设置" class="headerlink" title="自定义构建的初始存储库设置"></a>自定义构建的初始存储库设置</h2><p>在QGC和QGC的自定义构建版本上工作的建议机制是有两个单独的存储库。第一个存储库是你的主 QGC 分叉。第二个存储库是自定义生成存储库。</p>
+<h3 id="主要QGC存储库"><a href="#主要QGC存储库" class="headerlink" title="主要QGC存储库"></a>主要QGC存储库</h3><p>此存储库用于处理对主线 QGC 的更改。在创建自己的自定义构建时，发现您可能需要对自定义构建进行调整&#x2F;添加以实现所需的内容的情况并不少见。通过与 QGC 开发人员直接讨论这些需要的更改并提交拉取以使自定义构建架构更好，您可以使 QGC 对每个人来说更强大，并回馈社区。</p>
+<p>创建此存储库的最佳方法是将常规 QGC 存储库分叉到您自己的 GitHub 帐户。</p>
+<h3 id="自定义构建存储库"><a href="#自定义构建存储库" class="headerlink" title="自定义构建存储库"></a>自定义构建存储库</h3><p>这是您将进行主要自定义构建开发的地方。此处的所有更改都应在自定义目录中，而不是渗入常规的QGC代码库。</p>
+<p>由于只能分叉一次存储库，因此创建此存储库的方法是在 GitHub 帐户中“创建新存储库”。不要向其添加任何其他文件，如 gitignore、readme 等。创建后，您可以选择设置存储库。现在您可以选择“从另一个存储库导入代码”。只需使用“导入代码”按钮导入常规 QGC 存储库即可。</p>
+<h2 id="自定义构建插件"><a href="#自定义构建插件" class="headerlink" title="自定义构建插件"></a>自定义构建插件</h2><p>为自定义构建自定义 QGC 的机制是通过现有的 和体系结构。通过在自定义构建中创建这些插件的子类，您可以更改 QGC 的行为以满足您的需求，而无需修改上游代码。<code>FirmwarePlugin``AutoPilotPlugin``QGCCorePlugin</code></p>
+<h3 id="QGCCorePlugin"><a href="#QGCCorePlugin" class="headerlink" title="QGCCorePlugin"></a>QGCCorePlugin</h3><p>这允许您修改 QGC 中与车辆没有直接关系但与 QGC 应用程序本身相关的部分。这包括应用程序设置、调色板、品牌等内容。</p>
+<h2 id="资源覆盖"><a href="#资源覆盖" class="headerlink" title="资源覆盖"></a>资源覆盖</h2><p>QGC 源代码术语中的“资源”是指<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/qgroundcontrol.qrc">在 qgroundcontrol.qrc</a> 和 <a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/qgcresources.qrc">qgcresources.qrc</a> 文件中找到的任何内容。通过覆盖资源，您可以将其替换为您自己的版本。这可以像单个图标一样简单，也可以像替换 qml UI 代码的整个车辆设置页面一样复杂。</p>
+<p>请注意，使用资源覆盖并不像插件架构那样将您与上游 QGC 更改隔离开来。从某种意义上说，您直接修改了主代码使用的上游 QGC 资源。</p>
+<h3 id="排除文件"><a href="#排除文件" class="headerlink" title="排除文件"></a>排除文件</h3><p>覆盖资源的第一步是将其从上游构建的标准部分中“排除”。这意味着您将在自己的自定义生成资源文件中提供该资源。有两个文件可以实现这一点：<a target="_blank" rel="noopener" href="https://dev.qgroundcontrol.com/master/zh/custom_build/ResourceOverride.html">qgroundcontrol.exclusion和qgcresources.exclusion</a>。它们直接与 *.qrc 对应项对应。要排除资源，请将资源行从 .qrc 文件复制到相应的 .exclusion 文件中。</p>
+<h3 id="排除资源的自定义版本"><a href="#排除资源的自定义版本" class="headerlink" title="排除资源的自定义版本"></a>排除资源的自定义版本</h3><p>必须在自定义生成资源文件中包含重写资源的自定义版本。资源别名必须与上游别名完全匹配。资源的名称和实际位置可以位于自定义目录结构中的任何位置。</p>
+<h3 id="生成标准-QGC-资源文件的新修改版本"><a href="#生成标准-QGC-资源文件的新修改版本" class="headerlink" title="生成标准 QGC 资源文件的新修改版本"></a>生成标准 QGC 资源文件的新修改版本</h3><p>这是使用 python 脚本完成的。它将读取上游和文件以及相应的排除文件，并在自定义目录中输出这些文件的新版本。这些新版本将没有您指定要排除的资源。自定义生成的构建系统使用这些生成的文件（如果存在）而不是上游版本进行构建。这些文件的生成版本应添加到存储库中。此外，每当在自定义存储库中更新 QGC 的上游部分时，都必须重新运行以生成文件的新版本，因为上游资源可能已更改。<code>updateqrc.py``qgroundcontrol.qrc``qgcresources.qrc``python updateqrc.py</code></p>
+<h3 id="自定义构建示例"><a href="#自定义构建示例" class="headerlink" title="自定义构建示例"></a>自定义构建示例</h3><p>可以在存储库自定义构建示例中查看自定义生成 qgcresource 覆盖的示例：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/custom-example/qgcresources.exclusion">qgcresources.qrc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/custom-example/custom.qrc">custom.qrc</a></li>
+</ul>
+<h2 id="定制"><a href="#定制" class="headerlink" title="定制"></a>定制</h2><p>以下主题说明如何自定义 UI 的各种视图和其他部分。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dev.qgroundcontrol.com/master/zh/custom_build/FirstRunPrompts.html">首次运行提示</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.qgroundcontrol.com/master/zh/custom_build/Toolbar.html">工具栏自定义</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.qgroundcontrol.com/master/zh/custom_build/FlyView.html">飞视图定制</a></li>
+</ul>
+<h2 id="MAVLink-定制"><a href="#MAVLink-定制" class="headerlink" title="MAVLink 定制"></a>MAVLink 定制</h2><p>QGC使用MAVLink与飞行堆栈进行通信，<a target="_blank" rel="noopener" href="https://mavlink.io/en/">MAVLink</a>是一种非常轻量级的消息传递协议，专为无人机生态系统而设计。QGC默认包含<a target="_blank" rel="noopener" href="https://mavlink.io/en/messages/ardupilotmega.html">ArduPilotMega</a>.xml方言，允许它与PX4和Ardupilot进行通信（PX4使用<a target="_blank" rel="noopener" href="https://mavlink.io/en/messages/common.html">common.xml</a>，这在ArduPilotMega中包括）。</p>
+<p>为了添加对一组新消息的支持，您最终需要将它们添加到或，或分叉<em>QGroundControl</em>并包含您自己的方言。<code>ArduPilotMega.xml common.xml</code></p>
+<p>为此：</p>
+<ul>
+<li>替换 &#x2F;<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/tree/master/libs/mavlink/include/mavlink">qgroundcontrol&#x2F;libs&#x2F;mavlink&#x2F;include&#x2F;mavlink</a> 中的预构建 C 库。<ul>
+<li>默认情况下，这是一个子模块导入 <a target="_blank" rel="noopener" href="https://github.com/mavlink/c_library_v2">https://github.com/mavlink/c_library_v2</a></li>
+<li>您可以更改子模块，或使用 MAVLink 工具链<a target="_blank" rel="noopener" href="https://mavlink.io/en/getting_started/generate_libraries.html">构建自己的库</a>。</li>
+</ul>
+</li>
+<li>您可以通过在运行 <em>qmake</em> 时将其设置为<a target="_blank" rel="noopener" href="https://github.com/mavlink/qgroundcontrol/blob/master/QGCExternalLibs.pri#L52"><code>MAVLINK_CONF</code></a>来更改使用的整个方言。</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>QGC架构设计</p><p><a href="https://cccccrz.github.io/2023/05/10/QGC架构设计/">https://cccccrz.github.io/2023/05/10/QGC架构设计/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><a href="https://cccccrz.github.io"><p>tty</p></a></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-05-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-05-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="recommend-area"><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 相关文章</span><br><span>  1.<a class="is-size-6" href="/2023/05/10/qml%E5%AD%A6%E4%B9%A0-1/" target="_blank" rel="noreferrer">qml学习-1</a><br></span><span>  2.<a class="is-size-6" href="/2023/05/09/QGC%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank" rel="noreferrer">QGC开发环境搭建</a><br></span><span>  3.<a class="is-size-6" href="/2023/05/08/%E5%AE%9A%E5%88%B6qtcreator/" target="_blank" rel="noreferrer">定制qtcreator</a><br></span><span>  4.<a class="is-size-6" href="/2023/04/13/qt%E5%AF%8C%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90&amp;%E8%A7%A3%E6%9E%90/" target="_blank" rel="noreferrer">qt富文本生成&amp;解析</a><br></span><span>  5.<a class="is-size-6" href="/2023/04/13/qt%E5%89%AA%E8%B4%B4%E6%9D%BF/" target="_blank" rel="noreferrer">qt剪贴板</a><br></span><span>  6.<a class="is-size-6" href="/2023/04/13/Qt-MVC%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noreferrer">Qt MVC模型</a><br></span><span>  7.<a class="is-size-6" href="/2023/04/13/QThread%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" target="_blank" rel="noreferrer">QThread使用方法</a><br></span><span>  8.<a class="is-size-6" href="/2023/04/13/QList%E5%8E%BB%E9%87%8D/" target="_blank" rel="noreferrer">QList去重</a><br></span></div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># 推荐文章</span><br><span>  1.<a class="is-size-6" href="/2023/04/05/Github%E5%BC%80%E6%BA%90%E5%BA%93-%E5%B7%A5%E5%85%B7/" target="_blank" rel="noreferrer">Github开源库&amp;工具</a><br></span><span>  2.<a class="is-size-6" href="/2023/04/13/QList%E5%8E%BB%E9%87%8D/" target="_blank" rel="noreferrer">QList去重</a><br></span><span>  3.<a class="is-size-6" href="/2023/04/13/QThread%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" target="_blank" rel="noreferrer">QThread使用方法</a><br></span><span>  4.<a class="is-size-6" href="/2023/04/13/Qt-MVC%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noreferrer">Qt MVC模型</a><br></span><span>  5.<a class="is-size-6" href="/2023/04/13/qt%E5%89%AA%E8%B4%B4%E6%9D%BF/" target="_blank" rel="noreferrer">qt剪贴板</a><br></span><span>  6.<a class="is-size-6" href="/2023/04/13/qt%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" target="_blank" rel="noreferrer">qt增加右键菜单</a><br></span></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/10/qml%E5%AD%A6%E4%B9%A0-1/"><span class="level-item">qml学习-1</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex is-mobile" href="#用户界面设计"><span>用户界面设计</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#多设备设计模式"><span>多设备设计模式</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#目标设备"><span>目标设备</span></a></li><li><a class="is-flex is-mobile" href="#严重依赖可重用控件"><span>严重依赖可重用控件</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#字体和调色板"><span>字体和调色板</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#QGCPalette-QGC调色板"><span>QGCPalette(QGC调色板)</span></a></li><li><a class="is-flex is-mobile" href="#QGCMapPalette-QGC地图调色板"><span>QGCMapPalette(QGC地图调色板)</span></a></li><li><a class="is-flex is-mobile" href="#ScreenTools-屏幕工具"><span>ScreenTools (屏幕工具)</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#用户界面控件"><span>用户界面控件</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#Qt控件"><span>Qt控件</span></a></li><li><a class="is-flex is-mobile" href="#QGC-控件"><span>QGC 控件</span></a></li></ul></li></ul></li><li><a class="is-flex is-mobile" href="#Fact-System-事实系统"><span>Fact System(事实系统)</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#Fact"><span>Fact</span></a></li><li><a class="is-flex is-mobile" href="#FactMetaData"><span>FactMetaData</span></a></li><li><a class="is-flex is-mobile" href="#事实控制"><span>事实控制</span></a></li><li><a class="is-flex is-mobile" href="#FactGroup（事实小组）"><span>FactGroup（事实小组）</span></a></li><li><a class="is-flex is-mobile" href="#自定义构建支持"><span>自定义构建支持</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#顶级视图"><span>顶级视图</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#Settings-View"><span>Settings View</span></a></li><li><a class="is-flex is-mobile" href="#Setup-View"><span>Setup View</span></a></li><li><a class="is-flex is-mobile" href="#Plan-View"><span>Plan View</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#任务命令-UI-信息"><span>任务命令 UI 信息</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#Fly-View"><span>Fly View</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#文件格式"><span>文件格式</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#开发者工具"><span>开发者工具</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#模拟链接"><span>模拟链接</span></a></li><li><a class="is-flex is-mobile" href="#使用Mock-Link"><span>使用Mock Link</span></a></li></ul></li></ul></li><li><a class="is-flex is-mobile" href="#命令行选项"><span>命令行选项</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#使用选项启动QGroundControl"><span>使用选项启动QGroundControl</span></a></li><li><a class="is-flex is-mobile" href="#选项"><span>选项</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#自定义构建"><span>自定义构建</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#自定义构建的初始存储库设置"><span>自定义构建的初始存储库设置</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#主要QGC存储库"><span>主要QGC存储库</span></a></li><li><a class="is-flex is-mobile" href="#自定义构建存储库"><span>自定义构建存储库</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#自定义构建插件"><span>自定义构建插件</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#QGCCorePlugin"><span>QGCCorePlugin</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#资源覆盖"><span>资源覆盖</span></a><ul class="menu-list"><li><a class="is-flex is-mobile" href="#排除文件"><span>排除文件</span></a></li><li><a class="is-flex is-mobile" href="#排除资源的自定义版本"><span>排除资源的自定义版本</span></a></li><li><a class="is-flex is-mobile" href="#生成标准-QGC-资源文件的新修改版本"><span>生成标准 QGC 资源文件的新修改版本</span></a></li><li><a class="is-flex is-mobile" href="#自定义构建示例"><span>自定义构建示例</span></a></li></ul></li><li><a class="is-flex is-mobile" href="#定制"><span>定制</span></a></li><li><a class="is-flex is-mobile" href="#MAVLink-定制"><span>MAVLink 定制</span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="column-right-shadow is-hidden-widescreen"></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">ONE PIECE</a><p class="size-small"><span>&copy; 2023 tty</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noreferrer">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noreferrer">Icarus</a> &amp; <a href="https://github.com/LittleYe233/hexo-theme-amazingremake" target="_blank" rel="noreferrer">Amazing-Remake</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><div class="size-small"><span>❤️感谢 <strong><span id="busuanzi_value_site_uv">99+</span></strong> 小伙伴的 <strong><span id="busuanzi_value_site_pv">99+</span></strong> 次光临！❤️</span></div></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cccccrz"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    enabled: true,
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script><script type="text/javascript">var pjax = new Pjax({
+            elements: "a",//代表点击链接就更新
+            selectors: [  //代表要更新的节点
+                ".section",
+                "title"
+            ],
+            cache: true,
+            cacheBust:false
+        })
+
+        function loadBusuanzi(){
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", function () {});
+        }
+
+        function loadMathJax() { // 加载mathjax
+            window.MathJax = {
+                tex: {
+                    inlineMath: [['$', '$']],
+                    autoload: {
+                        color: [],
+                        colorv2: ['color']
+                    },
+                    packages: {'[+]': ['noerrors']}
+                },
+                options: {
+                    ignoreHtmlClass: 'tex2jax_ignore',
+                    processHtmlClass: 'tex2jax_process'
+                },
+                loader: {
+                    load: ['input/asciimath', '[tex]/noerrors']
+                }
+            };
+            $.getScript('//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js');
+        };
+
+        // 开始 PJAX 执行的函数
+        document.addEventListener('pjax:send', function () {
+        });
+        
+        // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+        document.addEventListener('pjax:complete', function () {
+            $(".section").css({opacity:1});
+            if(false){
+                $.getScript('/js/comment-issue-data.js',function(){loadIssueData('','','','',false);});
+            }
+            if('undefined' === 'mathjax'){
+                loadMathJax();
+            }
+            loadMainJs(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings);
+            loadBackTop();
+            loadBusuanzi();
+            if(typeof loadBanner == 'function'){
+                loadBanner();
+            }
+        });</script></body></html>
